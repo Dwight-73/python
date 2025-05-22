@@ -1,0 +1,67 @@
+/* estilos.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #f9faff;
+    color: #333;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+h1 {
+    color: #4A90E2;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(74,144,226,0.6);
+    margin-bottom: 1rem;
+    font-size: 2.8rem;
+}
+
+input[type="number"], select {
+    width: 100%;
+    padding: 0.7rem;
+    margin: 0.5rem 0 1rem 0;
+    border: 2px solid #4A90E2;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus, select:focus {
+    border-color: #357ABD;
+    outline: none;
+    box-shadow: 0 0 8px #357ABD;
+}
+
+button {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #357ABD;
+}
+
+.resultado {
+    margin-top: 1.2rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-align: center;
+    color: #2c3e50;
+}
+
+hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 2px solid #4A90E2;
+    opacity: 0.3;
+}
