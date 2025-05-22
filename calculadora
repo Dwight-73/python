@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calculadora + Conversor de Monedas</title>
+    <!-- Aquí enlazas el CSS dentro de la carpeta estilos.css -->
+    <link rel="stylesheet" href="estilos.css" />
+     <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
+        input, select, button { font-size: 1rem; padding: 0.5rem; margin: 0.3rem 0; }
+        .resultado { margin-top: 1rem; font-weight: bold; }
+        hr { margin: 2rem 0; }
+        #titulo {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          color: #4A90E2;
+          text-align: center;
+          text-shadow: 2px 2px 5px rgba(74, 144, 226, 0.5);
+          font-size: 3rem;
+          margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="titulo">CALCULADORA CIENTIFICA</h1>
+
+    <input type="number" id="num1" placeholder="Primer número" />
+    <select id="operador">
+        <option value="+">Sumar (+)</option>
+        <option value="-">Restar (-)</option>
+        <option value="*">Multiplicar (*)</option>
+        <option value="/">Dividir (/)</option>
+        <option value="**">Potencia (**)</option>
+        <option value="%">Módulo (%)</option>
+    </select>
+    <input type="number" id="num2" placeholder="Segundo número" />
+    <button type="button" onclick="calcular()">Calcular</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <hr />
+
+    <h1>Conversor de Monedas</h1>
+
+    <label for="monedaBase">Moneda base:</label>
+    <select id="monedaBase">
+        <option value="USD">USD - Dólar estadounidense</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="JPY">JPY - Yen japonés</option>
+        <option value="PEN">PEN - Sol peruano</option>
+        <option value="MXN">MXN - Peso mexicano</option>
+    </select>
+    <br />
+    <label for="monedaObjetivo">Moneda objetivo:</label>
+    <select id="monedaObjetivo">
+        <option value="USD">USD - Dólar estadounidense</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="JPY">JPY - Yen japonés</option>
+        <option value="PEN">PEN - Sol peruano</option>
+        <option value="MXN">MXN - Peso mexicano</option>
+    </select>
+    <br />
+    <input type="number" id="cantidad" placeholder="Cantidad a convertir" />
+    <button type="button" onclick="convertirMoneda()">Convertir</button>
+
+    <div class="resultado" id="resultadoMoneda"></div>
+
+<script>
+async function calcular() {
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const operador = document.getElementById('operador').value;
+    const num2 = parseFloat(document.getElementById('num2').value);
+    let resultado;
+
+    if (isNaN(num1) || isNaN(num2)) {
+        resultado = "⚠️ Ingresa números válidos.";
+    } else {
+        switch (operador) {
+            case '+': resultado = num1 + num2; break;
+            case '-': resultado = num1 - num2; break;
+            case '*': resultado = num1 * num2; break;
+            case '/': 
+                if (num2 === 0) resultado = "⚠️ No se puede dividir por cero.";
+                else resultado = num1 / num2; 
+                break;
+            case '**': resultado = Math.pow(num1, num2); break;
+            case '%': resultado = num1 % num2; break;
+            default: resultado = "Operador no válido";
+        }
+    }
+
+    document.getElementById('resultado').innerText = "Resultado: " + resultado;
+}
+
+async function convertirMoneda() {
+    const base = document.getElementById('monedaBase').value;
+    const objetivo = document.getElementById('monedaObjetivo').value;
+    const cantidad = parseFloat(document.getElementById('cantidad').value);
+
+    if (isNaN(cantidad)) {
+        document.getElementById('resultadoMoneda').innerText = "⚠️ Ingresa una cantidad válida.";
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
+        const data = await response.json();
+        if (!data.rates) {
+            document.getElementById('resultadoMoneda').innerText = "⚠️ Error con la API o moneda no válida.";
+            return;
+        }
+        const tasa = data.rates[objetivo];
+        if (!tasa) {
+            document.getElementById('resultadoMoneda').innerText = "⚠️ Moneda objetivo no válida.";
+            return;
+        }
+        const convertido = cantidad * tasa;
+        document.getElementById('resultadoMoneda').innerText = `${cantidad} ${base} = ${convertido.toFixed(2)} ${objetivo}`;
+    } catch (error) {
+        document.getElementById('resultadoMoneda').innerText = "❌ Error al conectar con la API.";
+    }
+}
+</script>
+
+</body>
+</html>
