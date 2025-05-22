@@ -1,0 +1,10 @@
+<h1 style="color:#4A90E2;">Conversor de Monedas</h1>
+
+  <label for="monedaBase" style="color:#f1f1f1;">Moneda base:</label>
+  <select id="monedaBase">
+    <option value="USD">USD - Dólar estadounidense</option>
+    <option value="EUR">EUR - Euro</option>
+    <option value="JPY">JPY - Yen japonés</option>
+    <option value="PEN">PEN - Sol peruano</option>
+    <option value="MXN">MXN - Peso mexicano</option>
+  </select><br />
